@@ -114,6 +114,9 @@ docker-compose logs     # Ver logs
 
 - [x] Frontend inicializado con Vite + React + TypeScript
 - [x] Backend inicializado con NestJs.
+- [x] Contenedores docker inicializados y configurados.
+- [x] Instalacion de Prisma para el manejo de BD en el backend.
+- [ ] Diseño inicial de la base de datos.
 - [ ] Backend básico con cálculo de salarios
 - [ ] Frontend con formulario y resultados
 - [ ] Parser básico de PDF
