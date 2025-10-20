@@ -113,6 +113,7 @@ docker-compose logs     # Ver logs
 ### Fase 1: MVP
 
 - [x] Frontend inicializado con Vite + React + TypeScript
+- [x] Backend inicializado con NestJs.
 - [ ] Backend básico con cálculo de salarios
 - [ ] Frontend con formulario y resultados
 - [ ] Parser básico de PDF
