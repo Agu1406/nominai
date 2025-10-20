@@ -1,0 +1,55 @@
+# Versión de docker utilizada.
+version: "3.8"
+
+# Servicios de la aplicación.
+services:
+  # Configuración del servicio de frontend (React + TS)
+  frontend:
+    # Directorio donde se construye la imagén docker.
+    build: ./frontend
+    # Puertos, por ahora, por defecto de Vite.
+    ports:
+      - "5173:5173"
+    # Directorios sincronizados entre el PC y el contenedor.
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    # Variables de entorno.
+    environment:
+      - NODE_ENV=development
+  
+  # Configuración del servicio de backend (NestJS)
+  backend:
+      # Directorio donde se construye la imagén docker.
+    build: ./backend
+    # Puertos, por ahora, por defecto de NestJs el 3000.
+    ports:
+      - "3000:3000"
+    # Directorios sincronizados entre el PC y el contenedor.
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    # Variables de entorno.
+    environment:
+      - NODE_ENV=development
+
+  # Configuración del servicio de base de datos.
+  database:
+    # Imagen de Postgre utilizada para el proyecto.
+    image: postgres:15
+    environment:
+      # Nombre de la BD y datos de acceso.
+      POSTGRES_DB: nominai
+      POSTGRES_USER: agu1406
+      POSTGRES_PASSWORD: nominai2025
+    # Puertos por defecto estandar de PostgreSQL.
+    ports:
+      - "5432:5432"
+    # Sincronización de datos entre el PC y el contenedor.
+    volumes:
+      - postgre_data:/var/lib/postgresql/data
+
+# Linea de volumenes necesarios, por ahora, vacia.
+volumes:
+  postgre_data:
+  
