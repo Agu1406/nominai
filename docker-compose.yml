@@ -1,6 +1,3 @@
-# Versión de docker utilizada.
-version: "3.8"
-
 # Servicios de la aplicación.
 services:
   # Configuración del servicio de frontend (React + TS)
