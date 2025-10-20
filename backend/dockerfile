@@ -1,9 +1,14 @@
-FROM node:18-alpine
+# Uitlizamos "alipine" porque es la imagén base de linux más ligera.
+FROM node:22-alpine
+# Directorio de trabajo de la imagén.
 WORKDIR /app
+# Copia desde el PC (local) al contenedor los JSON.
 COPY package*.json ./
+# Ejecuta el comando que instala depedencias dentro de la imagén.
 RUN npm install
+# Copia todo el código fuente del PC (local) al contenedor.
 COPY . .
+# Expone/abre el puerto 3000 (por defecto de NestJS).
 EXPOSE 3000
+# Ejecuta y arranca NestJs en modo "developer".
 CMD ["npm", "run", "start:dev"]
-
-# Debo seguir leyendo para entender que hacer
