@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -12,4 +6,50 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+/**
+ * Explicación racional del diseño inicial de la base de datos luego de analizar varias nominas y escribir
+ * en un parrafo el tipo de relacion entre los empleados y sus nominas:
+ * Una "nomina" pertenece a un "empleado" el cualta tiene al menos 1 y como maximo varias de ellas,
+ * la "nomina" esta hecha de diferentes "conceptos" que pueden ser deducciones o devengos, esos
+ * "conceptos" dependen de algunos datos del empleado, como su antiguedad, categoría, o tipo de
+ * contrato.
+ */
+
+model Empleado {
+  // Identificador unico auto-incrementativo de la aplicación.
+  idEmpleado       Int      @id @default(autoincrement())
+  // Identificador personal del empleado dentro de la empresa (es opcional).
+  codEmpleado      String?
+  // Nombre/s del empleado (es opcional).
+  nombreEmpleado   String?
+  // Apellido/s del empleado (es opcional).
+  apellidoEmpleado String
+  // Número de seguridad social del empleado (es opcional).
+  numeroSS         String?
+  // Tipo de contrato, "indefinido" o "temporal" (es opcional).
+  tipoContrato     String?
+  // Fecha de alta del empleado
+  fechaAlta        DateTime
+  // Antiguedad del empleado (se calcula por si sola).
+  antiguedad       Int
+  // Nominas del empleado, una o varias.
+  nominas          Nomina[]
+}
+
+model Nomina {
+  // Identificador unico de cada nomina dentro de la aplicación.
+  idNomina   Int      @id @default(autoincrement())
+  // Identificador del empleado propietario de "X" nomina.
+  idEmpleado Int
+  // Fecha de inicio del periodo liquidado
+  fechaInicio DateTime
+  // Fecha de fin del periodo liquidado.
+  fechaFin DateTime
+
+  // ¿Que más debería ir aquí? Esto es muy confuso.
+
+  // Relacion entre "nominas" y "empleados".
+  empleado Empleado @relation(fields: [idEmpleado], references: [idEmpleado])
 }
